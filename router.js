@@ -1,9 +1,14 @@
 const express = require('express')
 const router = express.Router()
+const userController = require('./Controllers/userController')
 
-router.get('/', (req, res) => {
-	res.send('Bosh Sahifadasiz')
-})
+// User routs
+router.get('/', userController.home)
+router.post('/signup', userController.signUp)
+router.post('/login', userController.login)
+router.get('/logout', userController.logout)
+
+// Other routes
 router.get('/menu', (req, res) => {
 	res.send('Menu Sahifadasiz')
 })
