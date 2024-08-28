@@ -17,6 +17,12 @@ app.set('view engine', 'ejs')
 app.use('/', router)
 
 // ======== Server & Mongoose starting ======== //
+
+// Middlewares
+app.use(express.json())
+// app.use(fileUpload({}))
+app.use(express.static('static'))
+
 const PORT = process.env.PORT || 8080
 
 const Server = async () => {
