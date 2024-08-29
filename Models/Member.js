@@ -2,6 +2,7 @@ const { Error } = require('mongoose')
 const MemberModel = require('../Schema/Member_schema')
 const Definer = require('../Lib/errors')
 const assert = require('assert')
+const bcrypt = require('bcryptjs')
 
 class MemberService {
 	constructor() {
@@ -9,6 +10,9 @@ class MemberService {
 	}
 	async signupData(data) {
 		try {
+			const salt = await bcrypt.genSalt()
+			data.mb_password = await bcrypt.hash(data.mb_password, salt)
+
 			const new_member = new this.memberModel(data)
 			let result
 			try {
@@ -32,7 +36,7 @@ class MemberService {
 				.exec()
 			assert.ok(member, `${Definer.auth_2}:${data.mb_nick}`)
 
-			const isMatch = data.mb_password === member.mb_password
+			const isMatch = await bcrypt.compare(data.mb_password, member.mb_password)
 			assert.ok(isMatch, Definer.auth_3)
 			return await this.memberModel.findOne({ mb_nick: data.mb_nick }).exec()
 		} catch (error) {
