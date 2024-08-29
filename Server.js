@@ -2,7 +2,6 @@ require('dotenv').config()
 const express = require('express')
 const { default: mongoose } = require('mongoose')
 const app = express()
-const router = require('./router')
 
 // Middlewares
 app.use(express.json())
@@ -17,11 +16,6 @@ app.set('view engine', 'ejs')
 app.use('/', router)
 
 // ======== Server & Mongoose starting ======== //
-
-// Middlewares
-app.use(express.json())
-// app.use(fileUpload({}))
-app.use(express.static('static'))
 
 const PORT = process.env.PORT || 8080
 
