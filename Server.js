@@ -15,6 +15,7 @@ app.set('view engine', 'ejs')
 
 // Routing
 app.use('/', router)
+// app.use('/resto', router_resto)
 
 // ======== Server & Mongoose starting ======== //
 

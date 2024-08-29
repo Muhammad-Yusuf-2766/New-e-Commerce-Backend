@@ -16,6 +16,7 @@ const memberSchema = new Schema(
 		mb_phone: {
 			type: String,
 			required: true,
+			index: { unique: true, sparse: true },
 		},
 		mb_password: {
 			type: String,
