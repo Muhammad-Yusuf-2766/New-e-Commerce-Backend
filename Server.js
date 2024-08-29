@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const { default: mongoose } = require('mongoose')
 const app = express()
+const router = require('./router')
 
 // Middlewares
 app.use(express.json())
