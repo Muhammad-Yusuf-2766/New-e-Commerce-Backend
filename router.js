@@ -2,6 +2,10 @@ const express = require('express')
 const router = express.Router()
 const userController = require('./Controllers/userController')
 
+/********************************
+ *          REST API            *
+ ********************************/
+
 // User routs
 
 router.post('/signup', userController.signUp)

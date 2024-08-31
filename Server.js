@@ -3,6 +3,7 @@ const express = require('express')
 const { default: mongoose } = require('mongoose')
 const app = express()
 const router = require('./router')
+const router_admin = require('./router_admin')
 
 // Middlewares
 app.use(express.json())
@@ -15,6 +16,7 @@ app.set('view engine', 'ejs')
 
 // Routing
 app.use('/', router)
+app.use('/resto', router_admin)
 // app.use('/resto', router_resto)
 
 // ======== Server & Mongoose starting ======== //
