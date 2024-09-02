@@ -4,11 +4,34 @@ const { default: mongoose } = require('mongoose')
 const app = express()
 const router = require('./router')
 const router_admin = require('./router_admin')
+let session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session)
+const store = new MongoDBStore({
+	uri: process.env.DB_URL,
+	collection: 'sessions',
+})
 
 // Middlewares
 app.use(express.json())
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+
+// Sessions
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET,
+		cookie: {
+			maxAge: 1000 * 60 * 30,
+		},
+		store: store,
+		resave: true,
+		saveUninitialized: true,
+	})
+)
+app.use(function (req, res, next) {
+	res.locals.member = req.session.member
+	next()
+})
 
 // Views
 app.set('views', 'views')
