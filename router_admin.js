@@ -2,7 +2,7 @@ const express = require('express')
 const router_admin = express.Router()
 const restaurntController = require('./Controllers/restaurantController')
 const productController = require('./Controllers/ProductsContr')
-const { uploadProductImg } = require('./Utils/upload_multer')
+const uploader_product = require('./Utils/upload_multer')('Members')
 
 /********************************
  *         ADMIN EJS            *
@@ -23,7 +23,7 @@ router_admin.get('/products/menu', restaurntController.getMyRestaurantData)
 router_admin.post(
 	'/products/create',
 	restaurntController.validateAuthRestaurant,
-	uploadProductImg.single('product_image'),
+	uploader_product.array('product_images', 5),
 	productController.addNewProduct
 )
 router_admin.post('/products/edit/:id', productController.updateChosenProduct)

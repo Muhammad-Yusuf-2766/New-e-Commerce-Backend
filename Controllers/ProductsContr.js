@@ -13,7 +13,7 @@ productController.addNewProduct = async (req, res) => {
 	try {
 		console.log('POST: contr.Product-addNewProduct')
 		// TO_DO: Product creation develop
-		res.send(user)
+		res.send('Ok')
 	} catch (error) {
 		console.log('ERROR: contr.Product-addNewProduc', error)
 	}
