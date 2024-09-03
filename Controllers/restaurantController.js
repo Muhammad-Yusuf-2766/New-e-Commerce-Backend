@@ -2,16 +2,6 @@ const MemberService = require('../Models/Member')
 
 let restaurantController = module.exports
 
-restaurantController.getMyRestaurant = async (req, res) => {
-	try {
-		console.log('GET: contr.getSignUpMyRestaurant')
-		res.render('signup')
-	} catch (error) {
-		console.log('ERROR: contr.getSignUpMyRestaurant', error)
-		res.json({ state: 'Fail', message: error.message })
-	}
-}
-
 restaurantController.getMyRestaurantData = async (req, res) => {
 	try {
 		console.log('GET: contr.User-getMyRestaurantData')
@@ -21,6 +11,16 @@ restaurantController.getMyRestaurantData = async (req, res) => {
 		res.render('restaurant-menu')
 	} catch (error) {
 		console.log('ERROR: contr.User-getMyRestaurantData', error)
+		res.json({ state: 'Fail', message: error.message })
+	}
+}
+
+restaurantController.getSignupMyRestaurant = async (req, res) => {
+	try {
+		console.log('GET: contr.getSignUpMyRestaurant')
+		res.render('signup')
+	} catch (error) {
+		console.log('ERROR: contr.getSignUpMyRestaurant', error)
 		res.json({ state: 'Fail', message: error.message })
 	}
 }
@@ -56,13 +56,11 @@ restaurantController.loginProcess = async (req, res) => {
 		const data = req.body,
 			memberService = new MemberService(),
 			member = await memberService.loginData(data)
-
+		// for user Session
 		req.session.member = member
 		req.session.save(function () {
 			res.redirect('/resto/products/menu')
 		})
-
-		// res.json({ state: 'success', data: member })
 	} catch (error) {
 		console.log('ERROR: contr.User-login', error)
 		res.json({ state: 'Fail', message: error.message })
@@ -70,6 +68,17 @@ restaurantController.loginProcess = async (req, res) => {
 }
 restaurantController.logout = (req, res) => {
 	res.send('You are in Login Page')
+}
+
+restaurantController.validateAuthRestaurant = (req, res, next) => {
+	if (req.session?.member?.mb_type === 'RESTAURANT') {
+		req.member = req.session.member
+		next()
+	} else
+		res.json({
+			state: 'Fail',
+			message: 'Only Authenticated members with restaurant type',
+		})
 }
 
 restaurantController.checkSessions = (req, res) => {
