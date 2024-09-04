@@ -26,6 +26,10 @@ router_admin.post(
 	uploader_product.array('product_images', 5),
 	productController.addNewProduct
 )
-router_admin.post('/products/edit/:id', productController.updateChosenProduct)
+router_admin.post(
+	'/products/edit/:id',
+	restaurntController.validateAuthRestaurant,
+	productController.updateChosenProduct
+)
 
 module.exports = router_admin
