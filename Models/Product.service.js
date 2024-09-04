@@ -39,6 +39,19 @@ class ProductService {
 			throw new Error(error)
 		}
 	}
+
+	async getAllProductsResto(member) {
+		try {
+			member._id = shapeIntoMongooseObjectId(member._id)
+			const result = await this.productModel.find({
+				restaurant_mb_id: member._id,
+			})
+			assert.ok(result, Definer.general_err1)
+			return result
+		} catch (error) {
+			throw new Error(error)
+		}
+	}
 }
 
 module.exports = ProductService

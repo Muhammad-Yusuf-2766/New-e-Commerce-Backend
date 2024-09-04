@@ -19,7 +19,7 @@ router_admin.post('/login', restaurntController.loginProcess)
 router_admin.get('/check-self', restaurntController.checkSessions)
 
 // Products related APIs
-router_admin.get('/products/menu', restaurntController.getMyRestaurantData)
+router_admin.get('/products/menu', restaurntController.getMyRestaurantProducts)
 router_admin.post(
 	'/products/create',
 	restaurntController.validateAuthRestaurant,
