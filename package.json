@@ -2,7 +2,7 @@
 	"name": "admin-new-papay",
 	"version": "1.0.0",
 	"description": "Backend e-Commerce",
-	"main": "index.js",
+	"main": "Server.js",
 	"scripts": {
 		"start": "node Server.js",
 		"dev": "nodemon Server.js",

@@ -85,7 +85,7 @@ const productSchema = new Schema(
 			required: false,
 			default: 0,
 		},
-		restaurant_id: {
+		restaurant_mb_id: {
 			type: Schema.ObjectId,
 			ref: 'Member',
 			required: false,

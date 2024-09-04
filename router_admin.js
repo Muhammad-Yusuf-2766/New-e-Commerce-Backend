@@ -2,7 +2,7 @@ const express = require('express')
 const router_admin = express.Router()
 const restaurntController = require('./Controllers/restaurantController')
 const productController = require('./Controllers/ProductsContr')
-const uploader_product = require('./Utils/upload_multer')('Members')
+const uploader_product = require('./Utils/upload_multer')('Products')
 
 /********************************
  *         ADMIN EJS            *

@@ -1,4 +1,4 @@
-const MemberService = require('../Models/Member')
+const MemberService = require('../Models/Member.service')
 
 let restaurantController = module.exports
 
