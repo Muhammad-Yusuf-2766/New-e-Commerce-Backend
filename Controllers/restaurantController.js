@@ -37,7 +37,7 @@ restaurantController.getSignupMyRestaurant = async (req, res) => {
 
 restaurantController.signUpProcess = async (req, res) => {
 	try {
-		console.log('POST: contr.User-signup')
+		console.log('POST: contr.User-signupProcess')
 		const data = req.body,
 			memberService = new MemberService(),
 			new_member = await memberService.signupData(data)
@@ -45,7 +45,7 @@ restaurantController.signUpProcess = async (req, res) => {
 		req.session.member = new_member
 		res.redirect('/resto/products/menu')
 	} catch (error) {
-		console.log('ERROR: contr.User-signup', error)
+		console.log('ERROR: contr.User-signupProcess', error)
 		res.json({ state: 'Fail', message: error.message })
 	}
 }
@@ -62,17 +62,19 @@ restaurantController.getLoginMyRestaurant = async (req, res) => {
 
 restaurantController.loginProcess = async (req, res) => {
 	try {
-		console.log('POST: contr.User-login')
+		console.log('POST: contr.User-loginProcess')
 		const data = req.body,
 			memberService = new MemberService(),
 			member = await memberService.loginData(data)
 		// for user Session
 		req.session.member = member
 		req.session.save(function () {
-			res.redirect('/resto/products/menu')
+			member.mb_type === 'ADMIN'
+				? res.redirect('/resto/all-restaurant')
+				: res.redirect('/resto/products/menu')
 		})
 	} catch (error) {
-		console.log('ERROR: contr.User-login', error)
+		console.log('ERROR: contr.User-loginProcess', error)
 		res.json({ state: 'Fail', message: error.message })
 	}
 }
