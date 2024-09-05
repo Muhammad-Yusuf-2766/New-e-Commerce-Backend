@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const {
 	mb_status_enums,
 	mb_type_enums,
-	ordernary_enums,
+	ordinary_enums,
 } = require('../Lib/config')
 const { Schema } = mongoose
 
@@ -63,7 +63,7 @@ const memberSchema = new Schema(
 			required: false,
 			default: 'N',
 			enum: {
-				values: ordernary_enums,
+				values: ordinary_enums,
 				message: '{VALUE} is not among permitted values',
 			},
 		},

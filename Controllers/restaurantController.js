@@ -3,14 +3,24 @@ const ProductService = require('../Models/Product.service')
 
 let restaurantController = module.exports
 
+restaurantController.home = (req, res) => {
+	try {
+		console.log('GET: contr.User-Restaurant-Home')
+		res.render('Home-page')
+	} catch (error) {
+		console.log('ERROR: contr.User-Restaurant-Home', error)
+		res.json({ state: 'Fail', message: error.message })
+	}
+}
+
 restaurantController.getMyRestaurantProducts = async (req, res) => {
 	try {
-		console.log('GET: contr.User-getMyRestaurantData')
+		console.log('GET: contr.User-getMyRestaurantProducts')
 		const product = new ProductService()
 		const data = await product.getAllProductsResto(res.locals.member) // to validate and get Auth member data. we used it in Server.js but it is another way. So you can use this way too if you want
 		res.render('restaurant-menu', { restaurant_data: data })
 	} catch (error) {
-		console.log('ERROR: contr.User-getMyRestaurantData', error)
+		console.log('ERROR: contr.User-getMyRestaurantProducts', error)
 		res.json({ state: 'Fail', message: error.message })
 	}
 }

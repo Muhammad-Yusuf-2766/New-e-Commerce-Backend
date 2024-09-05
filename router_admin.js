@@ -9,7 +9,7 @@ const uploader_product = require('./Utils/upload_multer')('Products')
  ********************************/
 
 // User routs
-
+router_admin.get('/', restaurntController.home)
 router_admin
 	.get('/signup', restaurntController.getSignupMyRestaurant)
 	.post('/signup', restaurntController.signUpProcess)

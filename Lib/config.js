@@ -2,7 +2,7 @@ const { default: mongoose } = require('mongoose')
 
 exports.mb_type_enums = ['USER', 'ADMIN', 'PEDAL', 'RESTAURANT']
 exports.mb_status_enums = ['ONPAUSE', 'ACTIVE', 'DELETED']
-exports.ordernary_enums = ['N', 'Y']
+exports.ordinary_enums = ['N', 'Y']
 
 exports.product_collection_enums = ['dish', 'salad', 'dessert', 'drink', 'etc']
 exports.product_status_enums = ['PAUSED', 'PROCESS', 'DELETED']
