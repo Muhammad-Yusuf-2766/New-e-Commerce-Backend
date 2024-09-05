@@ -3,6 +3,7 @@ const router_admin = express.Router()
 const restaurntController = require('./Controllers/restaurantController')
 const productController = require('./Controllers/ProductsContr')
 const uploader_product = require('./Utils/upload_multer')('Products')
+const uploader_member = require('./Utils/upload_multer')('Members')
 
 /********************************
  *         ADMIN EJS            *
@@ -12,7 +13,11 @@ const uploader_product = require('./Utils/upload_multer')('Products')
 router_admin.get('/', restaurntController.home)
 router_admin
 	.get('/signup', restaurntController.getSignupMyRestaurant)
-	.post('/signup', restaurntController.signUpProcess)
+	.post(
+		'/signup',
+		uploader_member.single('restaurant_img'),
+		restaurntController.signUpProcess
+	)
 
 router_admin.get('/login', restaurntController.getLoginMyRestaurant)
 router_admin.post('/login', restaurntController.loginProcess)

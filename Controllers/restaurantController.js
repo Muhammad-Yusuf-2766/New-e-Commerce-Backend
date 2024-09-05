@@ -1,5 +1,7 @@
+const assert = require('assert')
 const MemberService = require('../Models/Member.service')
 const ProductService = require('../Models/Product.service')
+const Definer = require('../Lib/errors')
 
 let restaurantController = module.exports
 
@@ -38,11 +40,17 @@ restaurantController.getSignupMyRestaurant = async (req, res) => {
 restaurantController.signUpProcess = async (req, res) => {
 	try {
 		console.log('POST: contr.User-signupProcess')
-		const data = req.body,
-			memberService = new MemberService(),
-			new_member = await memberService.signupData(data)
+		assert(req.file, Definer.general_err3)
+
+		let new_member = req.body
+		new_member.mb_type = 'RESTAURANT'
+		new_member.mb_image = req.file.path
+
+		const memberService = new MemberService()
+		const result = await memberService.signupData(new_member)
+		assert(result, Definer.general_err1)
 		// for user session
-		req.session.member = new_member
+		req.session.member = result
 		res.redirect('/resto/products/menu')
 	} catch (error) {
 		console.log('ERROR: contr.User-signupProcess', error)
