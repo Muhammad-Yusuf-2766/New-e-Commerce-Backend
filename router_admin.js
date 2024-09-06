@@ -21,6 +21,7 @@ router_admin
 
 router_admin.get('/login', restaurntController.getLoginMyRestaurant)
 router_admin.post('/login', restaurntController.loginProcess)
+router_admin.get('/logout', restaurntController.logout)
 router_admin.get('/check-self', restaurntController.checkSessions)
 
 // Products related APIs

@@ -7,39 +7,39 @@ let restaurantController = module.exports
 
 restaurantController.home = (req, res) => {
 	try {
-		console.log('GET: contr.User-Restaurant-Home')
+		console.log('GET: contr.Resto-Restaurant-Home')
 		res.render('Home-page')
 	} catch (error) {
-		console.log('ERROR: contr.User-Restaurant-Home', error)
+		console.log('ERROR: contr.Resto-Restaurant-Home', error)
 		res.json({ state: 'Fail', message: error.message })
 	}
 }
 
 restaurantController.getMyRestaurantProducts = async (req, res) => {
 	try {
-		console.log('GET: contr.User-getMyRestaurantProducts')
+		console.log('GET: contr.Resto-getMyRestaurantProducts')
 		const product = new ProductService()
 		const data = await product.getAllProductsResto(res.locals.member) // to validate and get Auth member data. we used it in Server.js but it is another way. So you can use this way too if you want
 		res.render('restaurant-menu', { restaurant_data: data })
 	} catch (error) {
-		console.log('ERROR: contr.User-getMyRestaurantProducts', error)
+		console.log('ERROR: contr.Resto-getMyRestaurantProducts', error)
 		res.json({ state: 'Fail', message: error.message })
 	}
 }
 
 restaurantController.getSignupMyRestaurant = async (req, res) => {
 	try {
-		console.log('GET: contr.getSignUpMyRestaurant')
+		console.log('GET: contr.Resto-getSignUpMyRestaurant')
 		res.render('signup')
 	} catch (error) {
-		console.log('ERROR: contr.getSignUpMyRestaurant', error)
+		console.log('ERROR: contr.Resto-getSignUpMyRestaurant', error)
 		res.json({ state: 'Fail', message: error.message })
 	}
 }
 
 restaurantController.signUpProcess = async (req, res) => {
 	try {
-		console.log('POST: contr.User-signupProcess')
+		console.log('POST: contr.Resto-signupProcess')
 		assert(req.file, Definer.general_err3)
 
 		let new_member = req.body
@@ -53,7 +53,7 @@ restaurantController.signUpProcess = async (req, res) => {
 		req.session.member = result
 		res.redirect('/resto/products/menu')
 	} catch (error) {
-		console.log('ERROR: contr.User-signupProcess', error)
+		console.log('ERROR: contr.Resto-signupProcess', error)
 		res.json({ state: 'Fail', message: error.message })
 	}
 }
@@ -87,7 +87,15 @@ restaurantController.loginProcess = async (req, res) => {
 	}
 }
 restaurantController.logout = (req, res) => {
-	res.send('You are in Login Page')
+	try {
+		console.log('POST: contr.Resto-logout')
+		req.session.destroy(function () {
+			res.redirect('/resto')
+		})
+	} catch (error) {
+		console.log('ERROR: contr.Resto-signupProcess', error)
+		res.json({ state: 'Fail', message: error.message })
+	}
 }
 
 restaurantController.validateAuthRestaurant = (req, res, next) => {
