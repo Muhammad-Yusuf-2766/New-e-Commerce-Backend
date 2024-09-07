@@ -53,7 +53,7 @@ const Server = async () => {
 			.then(() => console.log('MonoDB is Connected'))
 		app.listen(PORT, () => {
 			console.log(
-				`Server is running successfully on: http://localhost:${PORT}/`
+				`Server is running successfully on: http://localhost:${PORT}/resto`
 			)
 		})
 	} catch (error) {
