@@ -144,3 +144,18 @@ restaurantController.getAllRestaurants = async (req, res) => {
 		res.json({ state: 'Fail', message: error.message })
 	}
 }
+
+restaurantController.updateRestoByAdmin = async (req, res) => {
+	try {
+		console.log('POST: contr.Resto-updateRestoByAdmin')
+		const restaurant = new RestoService()
+		const result = await restaurant.updateRestoByAdminData(req.body)
+		await res.json({
+			state: 'Success',
+			data: result,
+		})
+	} catch (error) {
+		console.log('ERROR: contr.Resto-updateRestoByAdmin', error)
+		res.json({ state: 'Fail', message: error.message })
+	}
+}

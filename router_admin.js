@@ -43,5 +43,10 @@ router_admin.get(
 	restaurntController.validateAdmin,
 	restaurntController.getAllRestaurants
 )
+router_admin.post(
+	'/all-restaurants/edit',
+	restaurntController.validateAdmin,
+	restaurntController.updateRestoByAdmin
+)
 
 module.exports = router_admin
