@@ -38,4 +38,10 @@ router_admin.post(
 	productController.updateChosenProduct
 )
 
+router_admin.get(
+	'/all-restaurants',
+	restaurntController.validateAdmin,
+	restaurntController.getAllRestaurants
+)
+
 module.exports = router_admin

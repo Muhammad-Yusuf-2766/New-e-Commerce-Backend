@@ -19,7 +19,13 @@ a {
 }
 
 .nav-item a {
-	color: #735426;
+	color: #ababab;
+	font-weight: bold;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	transition: 0.5s ease;
+}
+.nav-item a:hover {
+	color: #925e11;
 }
 
 .nav-item a .disabled {

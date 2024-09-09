@@ -2,6 +2,7 @@ const assert = require('assert')
 const MemberService = require('../Models/Member.service')
 const ProductService = require('../Models/Product.service')
 const Definer = require('../Lib/errors')
+const RestoService = require('../Models/Resto.service')
 
 let restaurantController = module.exports
 
@@ -78,9 +79,10 @@ restaurantController.loginProcess = async (req, res) => {
 		req.session.member = member
 		req.session.save(function () {
 			member.mb_type === 'ADMIN'
-				? res.redirect('/resto/all-restaurant')
+				? res.redirect('/resto/all-restaurants')
 				: res.redirect('/resto/products/menu')
 		})
+		console.log(member)
 	} catch (error) {
 		console.log('ERROR: contr.User-loginProcess', error)
 		res.json({ state: 'Fail', message: error.message })
@@ -115,5 +117,30 @@ restaurantController.checkSessions = (req, res) => {
 		res.json({ state: 'success', data: req.session.member })
 	} else {
 		res.json({ state: 'Fail', message: 'You are not authenticated' })
+	}
+}
+
+restaurantController.validateAdmin = (req, res, next) => {
+	if (req.session?.member?.mb_type === 'ADMIN') {
+		req.member = req.session.member
+		next()
+	} else
+		res.json({
+			state: 'Fail',
+			message: 'Only Authenticated members with ADMIN type',
+		})
+}
+
+restaurantController.getAllRestaurants = async (req, res) => {
+	try {
+		console.log('GET: contr.Resto-getAllRestaurants')
+
+		// ToDo:
+		const restaurant = new RestoService()
+		const restaurants_data = await restaurant.getAllRestoData()
+		res.render('all-restaurants', { restaurants_data: restaurants_data })
+	} catch (error) {
+		console.log('ERROR: contr.Resto-getAllRestaurants', error)
+		res.json({ state: 'Fail', message: error.message })
 	}
 }
