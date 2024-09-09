@@ -32,7 +32,7 @@ class MemberService {
 	async loginData(data) {
 		try {
 			const member = await this.memberModel
-				.findOne({ mb_nick: data.mb_nick }, { mb_nick: 1, mb_password: 1 })
+				.findOne({ mb_nick: data.mb_nick }, { mb_nick: 1, mb_password: 1 }) // bu su ikkala ma'lumotnigina db dan chaqirish uchun
 				.exec()
 			assert.ok(member, `${Definer.auth_err2}:${data.mb_nick}`)
 
