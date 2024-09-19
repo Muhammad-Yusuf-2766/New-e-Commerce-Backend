@@ -3,6 +3,7 @@ class Definer {
 	static general_err1 = 'att: Something went wrong!'
 	static general_err2 = 'att: There is no data with that params!'
 	static general_err3 = 'att: File-upload error!!'
+	static token_err = 'att: There is no any Token Key!!'
 
 	// === Product Errors === //
 	static product_err1 = 'att: Product creation is failed!'

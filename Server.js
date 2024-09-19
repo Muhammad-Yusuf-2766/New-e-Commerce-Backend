@@ -4,6 +4,7 @@ const { default: mongoose } = require('mongoose')
 const app = express()
 const router = require('./router')
 const router_admin = require('./router_admin')
+const cookieParser = require('cookie-parser')
 let session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
 const store = new MongoDBStore({
@@ -15,6 +16,7 @@ const store = new MongoDBStore({
 app.use(express.json())
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 // Sessions
 app.use(
