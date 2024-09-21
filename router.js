@@ -11,6 +11,7 @@ const userController = require('./Controllers/userController')
 router.post('/signup', userController.signUp)
 router.post('/login', userController.login)
 router.get('/logout', userController.logout)
+router.get('/check-me', userController.checkMyAuth)
 
 // Other routes
 router.get('/menu', (req, res) => {

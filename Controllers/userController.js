@@ -68,3 +68,16 @@ userController.createToken = member => {
 		throw error
 	}
 }
+
+userController.checkMyAuth = (req, res) => {
+	try {
+		console.log('GET: cont/Check-my-auth')
+		const token = req.cookies['access_token']
+
+		const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null
+
+		res.json({ state: 'success', jwt: token, memebr: member })
+	} catch (error) {
+		throw error
+	}
+}
