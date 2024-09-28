@@ -47,7 +47,9 @@ userController.login = async (req, res) => {
 	}
 }
 userController.logout = (req, res) => {
-	res.send('You are in Login Page')
+	console.log('GET: contr.User-Logout')
+	res.cookie('access_token', null, { maxAge: 0, httpOnly: true })
+	res.json({ state: 'success', data: 'You are Logged out' })
 }
 
 userController.createToken = member => {
@@ -79,5 +81,33 @@ userController.checkMyAuth = (req, res) => {
 		res.json({ state: 'success', jwt: token, memebr: member })
 	} catch (error) {
 		throw error
+	}
+}
+
+userController.retrieveAuthMember = (req, res, next) => {
+	try {
+		const token = req.cookies['access_token']
+
+		req.member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null
+		next()
+	} catch (error) {
+		console.log('ERROR: contr.User-retrieveAuthMember', error.message)
+		next()
+	}
+}
+
+userController.getChosenMember = async (req, res) => {
+	try {
+		console.log('GET: cont/getChosenMember')
+
+		console.log('=====', req.member)
+		const id = req.params.id
+		const member = new MemberService()
+		const result = await member.getChosenMemberData(req.member, id)
+
+		res.json({ state: 'success', data: result })
+	} catch (error) {
+		console.log('ERROR: contr.User-login', error)
+		res.json({ state: 'Fail', message: error.message })
 	}
 }
