@@ -4,6 +4,7 @@ const Definer = require('../Lib/errors')
 const assert = require('assert')
 const bcrypt = require('bcryptjs')
 const { shapeIntoMongooseObjectId } = require('../Lib/config')
+const ViewService = require('./View.service')
 
 class MemberService {
 	constructor() {
@@ -51,6 +52,7 @@ class MemberService {
 
 			if (member) {
 				// condition if not seen before
+				this.viewChosenItemByMember(member, id, 'member')
 			}
 			const result = await this.memberModel
 				.aggregate([
@@ -61,6 +63,36 @@ class MemberService {
 
 			assert.ok(result, Definer.general_err2)
 			return result[0]
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async viewChosenItemByMember(member, view_ref_id, group_type) {
+		try {
+			view_ref_id = shapeIntoMongooseObjectId(view_ref_id)
+			const mb_id = shapeIntoMongooseObjectId(member._id)
+
+			// Validation needed
+			const viewService = new ViewService(mb_id)
+			const isValid = await viewService.validateChosenTarget(
+				view_ref_id,
+				group_type
+			)
+			assert.ok(isValid, Definer.general_err2)
+
+			// if User has seen target <before></before>
+			const isExist = await viewService.checkViewExistence(view_ref_id)
+			console.log('have User seen this target before ?:', isExist)
+
+			if (!isExist) {
+				const result = await viewService.insertMemberView(
+					view_ref_id,
+					group_type
+				)
+				assert.ok(result, Definer.general_err2)
+			}
+			return true
 		} catch (error) {
 			throw error
 		}
